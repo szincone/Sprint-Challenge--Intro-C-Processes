@@ -18,10 +18,12 @@ int main(int argc, char **argv)
     dir_name = argv[1];
   }
   // Open directory
+  DIR *d = opendir(dir_name);
 
   // Repeatly read and print entries
 
   // Close directory
+  closeddir(d);
 
   return 0;
 }
