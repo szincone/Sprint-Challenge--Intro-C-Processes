@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <dirent.h>
+#include <sys/stat.h>
 
 /**
  * Main
@@ -21,9 +22,25 @@ int main(int argc, char **argv)
   DIR *d = opendir(dir_name);
 
   // Repeatly read and print entries
-
+  struct dirent *ent;
+  while ((ent = readdir(d)) != NULL)
+  {
+    struct stat s_buff;
+    if (S_ISREG(s_buff.st_mode))
+    {
+      printf("%10lld %s\n", s_buff.st_size, ent->d_name);
+    }
+    else if (S_ISDIR(s_buff.st_mode))
+    {
+      printf("%10lld %s\n", "<DIR>", ent->d_name);
+    }
+    else
+    {
+      printf("%10lld %s\n", "", ent->d_name);
+    }
+  }
   // Close directory
-  closeddir(d);
+  closedir(d);
 
   return 0;
 }
